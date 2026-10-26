@@ -3,18 +3,251 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Defin — Coming soon</title>
+  <title>Defin — Legal language, defined.</title>
+  <meta name="description" content="Defin turns dense contracts and legal jargon into plain English, so you know exactly what you're agreeing to.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f7f5f0; color: #14161f; font: 18px/1.6 Georgia, serif; text-align: center; padding: 24px; box-sizing: border-box; }
-    h1 { font-size: 56px; margin: 0; letter-spacing: -1px; }
-    h1 span { color: #2f4bd8; }
-    p { color: #4a4f5e; margin: 8px 0 0; font-family: system-ui, sans-serif; }
+    :root {
+      --ink: #14161f;
+      --ink-soft: #4a4f5e;
+      --paper: #f7f5f0;
+      --card: #ffffff;
+      --line: #e3dfd5;
+      --accent: #2f4bd8;
+      --accent-soft: #e6eafc;
+      --highlight: #fbe7a1;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 400 17px/1.6 Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.15; margin: 0; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+    .logo { font-family: Fraunces, Georgia, serif; font-size: 26px; font-weight: 600; text-decoration: none; letter-spacing: -0.5px; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; align-items: center; font-size: 15px; }
+    .nav-links a { text-decoration: none; color: var(--ink-soft); }
+    .nav-links a:hover { color: var(--ink); }
+    .btn {
+      display: inline-block; background: var(--ink); color: #fff !important; text-decoration: none;
+      padding: 12px 22px; border-radius: 999px; font-weight: 500; font-size: 15px; border: 0; cursor: pointer;
+      font-family: inherit; transition: transform .15s, background .15s;
+    }
+    .btn:hover { background: var(--accent); transform: translateY(-1px); }
+
+    .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; padding: 64px 0 96px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 6px 12px; border-radius: 999px; margin-bottom: 22px; }
+    .hero h1 { font-size: clamp(42px, 6vw, 68px); letter-spacing: -1.5px; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p { font-size: 20px; color: var(--ink-soft); margin: 22px 0 32px; max-width: 30em; }
+    .hero-cta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .hero-cta .link { font-weight: 500; text-decoration: none; color: var(--ink-soft); }
+    .hero-cta .link:hover { color: var(--ink); }
+
+    .demo { position: relative; }
+    .doc {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 30px 30px 34px; box-shadow: 0 30px 60px -30px rgba(20,22,31,.25);
+      font-family: Georgia, serif; font-size: 15.5px; line-height: 1.75; color: #2b2e38;
+    }
+    .doc-label { font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #9a9686; margin-bottom: 12px; }
+    .term { background: var(--highlight); border-radius: 3px; padding: 0 2px; border-bottom: 2px solid #e2c24f; }
+    .tip {
+      position: relative; margin: -18px -12px 0 48px;
+      background: var(--ink); color: #fff; border-radius: var(--radius); padding: 20px 22px;
+      box-shadow: 0 24px 48px -20px rgba(20,22,31,.5); font-size: 14.5px; line-height: 1.55;
+    }
+    .tip strong { display: block; font-family: Fraunces, serif; font-size: 18px; margin-bottom: 6px; }
+    .tip .tag { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 600; background: rgba(255,255,255,.12); padding: 4px 10px; border-radius: 999px; }
+
+    section { padding: 96px 0; }
+    .section-head { max-width: 640px; margin-bottom: 52px; }
+    .section-head h2 { font-size: clamp(32px, 4vw, 44px); letter-spacing: -1px; }
+    .section-head p { color: var(--ink-soft); font-size: 18px; margin: 16px 0 0; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: step; }
+    .step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; }
+    .step::before { counter-increment: step; content: "0" counter(step); font-family: Fraunces, serif; font-size: 15px; color: var(--accent); font-weight: 600; }
+    .step h3 { font-size: 22px; margin: 14px 0 10px; }
+    .step p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+    .features { background: var(--ink); color: #fff; }
+    .features .section-head p { color: #b6b9c6; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: #2c2f3b; border-radius: var(--radius); overflow: hidden; }
+    .feature { background: var(--ink); padding: 34px; }
+    .feature h3 { font-size: 21px; margin-bottom: 10px; }
+    .feature p { margin: 0; color: #b6b9c6; font-size: 16px; }
+    .icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,.08); display: grid; place-items: center; margin-bottom: 18px; color: #9fb0ff; }
+
+    .who { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .who div { border-top: 2px solid var(--ink); padding-top: 18px; }
+    .who h3 { font-size: 22px; margin-bottom: 8px; }
+    .who p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+    .cta { text-align: center; background: var(--accent-soft); border-radius: 24px; padding: 72px 32px; }
+    .cta h2 { font-size: clamp(32px, 4vw, 46px); letter-spacing: -1px; }
+    .cta p { color: var(--ink-soft); font-size: 18px; margin: 14px auto 32px; max-width: 32em; }
+
+    footer { padding: 48px 0 56px; color: var(--ink-soft); font-size: 14px; }
+    .foot { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 28px; }
+    .disclaimer { max-width: 560px; margin: 0; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 32px 0 64px; }
+      .steps, .who, .grid { grid-template-columns: 1fr; }
+      .tip { margin: -16px 0 0 24px; }
+      .nav-links a:not(.btn) { display: none; }
+      section { padding: 72px 0; }
+    }
+    @media (max-width: 520px) {
+      .wrap { padding: 0 16px; }
+      .cta { padding: 52px 20px; }
+    }
   </style>
 </head>
 <body>
-  <div>
-    <h1>Defin<span>.</span></h1>
-    <p>Legal language, defined. Coming soon.</p>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="/">Defin<span>.</span></a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a class="btn" href="#access">Get early access</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <span class="eyebrow">Legal tech · Early access</span>
+        <h1>Legal language, <em>defined.</em></h1>
+        <p>Defin turns dense contracts and legal jargon into plain English, so you know exactly what you're agreeing to before you sign.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#access">Request early access</a>
+          <a class="link" href="#how">See how it works →</a>
+        </div>
+      </div>
+
+      <div class="demo" aria-hidden="true">
+        <div class="doc">
+          <div class="doc-label">Service Agreement · §7.2</div>
+          The Client shall <span class="term">indemnify and hold harmless</span> the Provider from any and all claims arising out of the Client's use of the Services, <span class="term">notwithstanding</span> any provision herein to the contrary.
+        </div>
+        <div class="tip">
+          <strong>Indemnify and hold harmless</strong>
+          You agree to pay for the provider's losses, including their legal fees, if someone sues them because of how you used the service.
+          <div><span class="tag">⚠ Worth a closer look</span></div>
+        </div>
+      </div>
+    </header>
   </div>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>From fine print to clear meaning in seconds.</h2>
+        <p>No law degree needed. Upload a document and Defin does the reading with you.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Upload or paste</h3>
+          <p>Drop in a contract, lease, NDA or terms of service. PDF, Word or plain text.</p>
+        </div>
+        <div class="step">
+          <h3>See every term defined</h3>
+          <p>Defin highlights legal terms and clauses and explains each one in plain language.</p>
+        </div>
+        <div class="step">
+          <h3>Know what matters</h3>
+          <p>Get a short summary of your obligations, deadlines and clauses worth a second look.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Built for clarity.</h2>
+        <p>Everything you need to understand a legal document, and nothing you don't.</p>
+      </div>
+      <div class="grid">
+        <div class="feature">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div>
+          <h3>Plain-English definitions</h3>
+          <p>Every legal term, explained in context. Not a dictionary entry, but what it means in your document.</p>
+        </div>
+        <div class="feature">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+          <h3>Clause flags</h3>
+          <p>Automatic renewals, liability waivers, non-competes: unusual or one-sided clauses are flagged so you can ask the right questions.</p>
+        </div>
+        <div class="feature">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <h3>One-page summaries</h3>
+          <p>Key dates, payments, obligations and termination terms, pulled into a summary you can share.</p>
+        </div>
+        <div class="feature">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Private by default</h3>
+          <p>Your documents are encrypted and never used to train models. Delete them anytime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>For anyone who signs things.</h2>
+      </div>
+      <div class="who">
+        <div>
+          <h3>Individuals</h3>
+          <p>Leases, job offers, loan agreements. Understand them before you commit.</p>
+        </div>
+        <div>
+          <h3>Small businesses</h3>
+          <p>Vendor contracts and client agreements, reviewed fast without a billable hour.</p>
+        </div>
+        <div>
+          <h3>Legal teams</h3>
+          <p>Hand clients clear explanations and spend your time on the work that needs you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" id="access">
+    <div class="cta">
+      <h2>Be first to try Defin.</h2>
+      <p>We're opening early access soon. Send us a note and we'll let you know when it's your turn.</p>
+      <a class="btn" href="mailto:hello@defin.legal?subject=Defin%20early%20access">Request early access</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="logo" href="/" style="font-size:20px">Defin<span>.</span></a>
+          <div style="margin-top:6px">© <span id="yr">2026</span> Defin · <a href="mailto:hello@defin.legal">hello@defin.legal</a></div>
+        </div>
+        <p class="disclaimer">Defin provides legal information, not legal advice, and is not a law firm. Using Defin does not create an attorney-client relationship. For advice about your situation, consult a licensed attorney.</p>
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
